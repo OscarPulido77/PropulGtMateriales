@@ -1,0 +1,617 @@
+/*
+ * Copyright 2025 [Tu Nombre o Nombre de tu Sitio/Empresa]. Todos los derechos reservados.
+ * Código CSS para la Calculadora de Materiales Tablayeso.
+ */
+
+/* Define una paleta de colores */
+:root {
+    --color-primary-olive: #66754c; /* DarkOliveGreen - Principal para títulos, énfasis */
+    --color-secondary-olive: #808000; /* Olive - Acento para subtítulos, bordes interactivos */
+    --color-light-olive: #365430; /* Muted light green - Botones secundarios, fondos suaves */
+    --color-dark-gray: #333; /* Texto principal oscuro */
+    --color-medium-gray: #666; /* Texto secundario, etiquetas */
+    --color-light-gray: #e0e0e0; /* Bordes sutiles, divisores */
+    --color-extra-light-gray: #f8f8f8; /* Fondos de sección muy claros */
+    --color-white: #fff; /* Fondo principal */
+    --color-error: #c0392b; /* Darker red for errors */
+
+    /* Espaciados comunes */
+    --spacing-unit: 8px;
+    --spacing-small: calc(var(--spacing-unit) * 1.5); /* 12px */
+    --spacing-medium: calc(var(--spacing-unit) * 2); /* 16px */
+    --spacing-large: calc(var(--spacing-unit) * 3); /* 24px */
+    --spacing-extra-large: calc(var(--spacing-unit) * 4); /* 32px */
+
+    /* Sombras */
+    --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.06);
+    --shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --shadow-pronounced: 0 10px 25px rgba(0, 0, 0, 0.15);
+
+    /* Bordes redondeados */
+    --border-radius-small: 4px;
+    --border-radius-medium: 8px;
+    --border-radius-large: 12px;
+}
+
+body {
+    font-family: 'Lato', sans-serif; /* Fuente principal */
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-extra-light-gray); /* Fondo base muy claro */
+    /* Fondo con líneas abstractas sutiles */
+    background-image: linear-gradient(45deg, rgba(0,0,0,.03) 25%, transparent 25%, transparent 75%, rgba(0,0,0,.03) 75%, rgba(0,0,0,.03) 100%),
+                      linear-gradient(-45deg, rgba(0,0,0,.03) 25%, transparent 25%, transparent 75%, rgba(0,0,0,.03) 75%, rgba(0,0,0,.03) 100%);
+    background-size: 30px 30px; /* Ajusta el tamaño para densidad */
+    color: var(--color-dark-gray); /* Texto principal oscuro */
+    min-height: 100vh;
+    display: flex; /* Usar flexbox para centrar contenido verticalmente si es necesario */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: flex-start; /* Alinear al inicio verticalmente, para no forzar centrado completo */
+    padding: var(--spacing-extra-large) 0; /* Añadir padding superior/inferior al body */
+}
+
+.container {
+    max-width: 1000px; /* Un poco más ancho */
+    width: 95%; /* Asegura que no ocupe el 100% en pantallas pequeñas */
+    margin: 0 auto; /* Centra el contenedor */
+    background: var(--color-white); /* Fondo blanco para el contenido principal */
+    padding: var(--spacing-extra-large); /* Más padding interno */
+    border-radius: var(--border-radius-large); /* Bordes más redondeados */
+    box-shadow: var(--shadow-pronounced); /* Sombra más pronunciada y suave */
+}
+
+h1, h2 {
+    font-family: 'Oswald', sans-serif; /* Fuente para títulos */
+    color: var(--color-primary-olive); /* Verde olivo principal */
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: var(--spacing-extra-large);
+    text-transform: uppercase; /* Títulos en mayúsculas */
+    letter-spacing: 1.5px; /* Mayor espaciado entre letras */
+}
+
+h1 {
+    font-size: 2.5em; /* Tamaño de título principal */
+    margin-bottom: var(--spacing-large);
+}
+
+h2 {
+    font-size: 1.8em;
+    margin-bottom: var(--spacing-large);
+    border-bottom: 2px solid var(--color-light-gray); /* Separador visual */
+    padding-bottom: var(--spacing-small);
+    letter-spacing: 1px;
+}
+
+.input-section, .results-section {
+    margin-bottom: var(--spacing-extra-large); /* Más espacio entre secciones */
+    padding: var(--spacing-large); /* Más padding interno */
+    border: 1px solid var(--color-light-gray); /* Borde sutil */
+    border-radius: var(--border-radius-medium); /* Bordes redondeados */
+    background-color: var(--color-extra-light-gray); /* Fondo ligero para secciones */
+    box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.03); /* Sombra interna sutil */
+}
+
+#items-container {
+    margin-bottom: var(--spacing-large); /* Más espacio antes del botón de agregar */
+}
+
+.item-block {
+    border: 1px solid var(--color-light-gray);
+    padding: var(--spacing-large); /* Más padding */
+    margin-bottom: var(--spacing-large);
+    border-radius: var(--border-radius-medium);
+    background-color: var(--color-white);
+    position: relative;
+    box-shadow: var(--shadow-subtle); /* Sombra para bloques de ítem */
+    transition: box-shadow 0.2s ease-in-out; /* Transición para hover */
+}
+
+.item-block:hover {
+    box-shadow: var(--shadow-medium); /* Sombra más intensa en hover */
+}
+
+.item-block h3 {
+    font-family: 'Oswald', sans-serif;
+    color: var(--color-secondary-olive); /* Verde olivo de acento */
+    margin-top: 0;
+    margin-bottom: var(--spacing-medium);
+    border-bottom: 2px solid var(--color-light-gray); /* Borde inferior más definido */
+    padding-bottom: var(--spacing-small);
+    font-size: 1.5em;
+}
+
+.input-group {
+    margin-bottom: var(--spacing-medium); /* Espacio entre grupos de input */
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+    align-items: center;
+    gap: var(--spacing-small); /* Espacio entre label e input */
+}
+
+.input-group label {
+    display: block; /* Label en su propia línea o flexible */
+    width: 200px; /* Ancho fijo para labels, ajusta según necesidad */
+    font-weight: bold;
+    color: var(--color-medium-gray);
+    flex-shrink: 0; /* Evita que el label se encoja */
+}
+
+.input-group input[type="number"],
+.input-group select {
+    flex-grow: 1; /* Permite que el input/select ocupe el espacio restante */
+    padding: var(--spacing-small) var(--spacing-medium); /* Más padding */
+    border: 1px solid var(--color-light-gray);
+    border-radius: var(--border-radius-small);
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    min-width: 150px; /* Ancho mínimo para inputs */
+}
+
+.input-group input[type="number"]:focus,
+.input-group select:focus {
+     border-color: var(--color-secondary-olive); /* Borde verde olivo al enfocar */
+     outline: none;
+     box-shadow: 0 0 8px rgba(128, 128, 0, 0.2); /* Sombra suave al enfocar */
+}
+
+/* Estilos para el checkbox */
+.input-group input[type="checkbox"] {
+    width: auto; /* Anula el flex-grow */
+    margin-right: var(--spacing-small);
+}
+
+/* --- Estilos para los nuevos contenedores de tipo de panel --- */
+.muro-panel-types,
+.cielo-panel-type {
+    margin-top: var(--spacing-large); /* Espacio arriba de los selectores de panel */
+    padding-top: var(--spacing-medium); /* Padding arriba para separar visualmente */
+    border-top: 1px dashed var(--color-light-gray); /* Borde punteado para separar */
+}
+
+/* Añadir borde y padding si hay dos selectores de panel en muro */
+/* Esto se controla implícitamente porque el div .muro-panel-types siempre existe para muros */
+/* Si queremos que el borde solo aparezca con 2 caras, necesitaríamos JS para añadir una clase */
+/* Por ahora, aplicamos el borde siempre que el contenedor de muros esté visible */
+.muro-panel-types:not(.hidden) {
+    padding: var(--spacing-medium); /* Padding alrededor de los selectores de panel */
+    border: 1px solid var(--color-light-gray); /* Borde alrededor del grupo */
+    border-radius: var(--border-radius-medium);
+    margin-bottom: var(--spacing-medium); /* Espacio debajo del grupo de selectores */
+}
+
+/* Asegura que los input-group dentro de estos contenedores tengan su margen */
+.muro-panel-types .input-group,
+.cielo-panel-type .input-group {
+    margin-bottom: var(--spacing-medium); /* Espacio entre los selectores de panel si hay varios (muro con 2 caras) */
+}
+
+/* Elimina el margen inferior del último input-group dentro del contenedor de panel types */
+.muro-panel-types .input-group:last-child,
+.cielo-panel-type .input-group:last-child {
+    margin-bottom: 0;
+}
+
+/* Estilos generales para botones */
+button {
+    display: block;
+    width: 100%;
+    padding: var(--spacing-small) var(--spacing-medium); /* Ajusta padding */
+    border: none;
+    border-radius: var(--border-radius-small);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, opacity 0.3s ease, transform 0.1s ease;
+    margin-top: var(--spacing-medium);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: var(--shadow-subtle);
+}
+
+button:hover:not(:disabled) {
+    opacity: 0.95; /* Ligera opacidad en hover */
+    transform: translateY(-1px); /* Ligero desplazamiento hacia arriba */
+    box-shadow: var(--shadow-medium);
+}
+
+button:active:not(:disabled) {
+     transform: translateY(0); /* Vuelve a la posición normal al hacer clic */
+     box-shadow: var(--shadow-subtle);
+}
+
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.6;
+    box-shadow: none;
+}
+
+
+#add-item-btn {
+    background-color: var(--color-light-olive); /* Verde olivo claro */
+    color: var(--color-dark-gray);
+}
+
+#add-item-btn:hover:not(:disabled) {
+    background-color: #8BA188; /* Tono un poco más oscuro */
+}
+
+#calculate-btn {
+     background-color: var(--color-secondary-olive); /* Verde olivo de acento */
+     color: var(--color-white);
+     margin-top: var(--spacing-large);
+}
+
+#calculate-btn:hover:not(:disabled) {
+     background-color: #6B6B00; /* Tono más oscuro */
+}
+
+/* Estilos para el contenedor de botones de descarga */
+.download-options {
+    display: flex; /* Botones en línea */
+    gap: var(--spacing-medium); /* Espacio entre botones */
+    margin-top: var(--spacing-large);
+    justify-content: flex-end; /* Alinear a la derecha */
+    flex-wrap: wrap; /* Permite que los botones se envuelvan */
+}
+
+/* Estilos para botones dentro del contenedor de descarga */
+.download-options button {
+     width: auto; /* Anula width: 100% */
+     flex-grow: 0; /* No fuerces a crecer, usa contenido */
+     margin-top: 0; /* Anula margin-top */
+     padding: var(--spacing-small); /* Menos padding que botones principales */
+     font-size: 1rem; /* Fuente ligeramente más pequeña */
+     box-shadow: var(--shadow-subtle);
+}
+
+.download-options button:hover:not(:disabled) {
+     transform: translateY(-1px);
+     box-shadow: var(--shadow-medium);
+}
+
+.download-options button:active:not(:disabled) {
+      transform: translateY(0);
+      box-shadow: var(--shadow-subtle);
+}
+
+#generate-pdf-btn {
+    background-color: var(--color-primary-olive); /* Verde olivo principal para PDF */
+    color: var(--color-white);
+}
+
+#generate-pdf-btn:hover:not(:disabled) {
+    background-color: #435325; /* Tono más oscuro */
+}
+
+#generate-excel-btn {
+     background-color: #38761D; /* Un verde más distintivo para Excel */
+     color: var(--color-white);
+}
+
+#generate-excel-btn:hover:not(:disabled) {
+     background-color: #275214; /* Tono más oscuro */
+}
+
+
+.remove-item-btn {
+    position: absolute;
+    top: var(--spacing-medium); /* Ajusta posición */
+    right: var(--spacing-medium); /* Ajusta posición */
+    background-color: #dc3545; /* Rojo */
+    color: white;
+    border: none;
+    border-radius: var(--border-radius-small);
+    cursor: pointer;
+    padding: calc(var(--spacing-unit) / 2) var(--spacing-unit); /* Padding reducido */
+    font-size: 0.8rem; /* Tamaño de fuente más pequeño */
+    width: auto;
+    margin-top: 0;
+    z-index: 1;
+    transition: background-color 0.3s ease;
+    box-shadow: none; /* Sin sombra inicial */
+}
+
+.remove-item-btn:hover {
+    background-color: #c82333;
+    transform: none; /* Evita la transformación de los botones principales */
+    box-shadow: var(--shadow-subtle); /* Añade una sombra suave en hover */
+}
+
+.remove-item-btn:active {
+    background-color: #bb2d3b;
+    box-shadow: none;
+}
+
+/* Asegura que .hidden oculte el flex display */
+.hidden {
+    display: none !important;
+}
+
+/* --- Estilos para el contenido del resumen generado --- */
+#results-content {
+    background-color: var(--color-white); /* Fondo blanco */
+    padding: var(--spacing-large); /* Más padding */
+    border-radius: var(--border-radius-medium);
+    border: 1px solid var(--color-light-gray);
+    min-height: 80px; /* Altura mínima para visualización */
+    text-align: left;
+    word-break: break-word;
+    box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.03); /* Sombra interna */
+    line-height: 1.7; /* Interlineado para mejor legibilidad */
+}
+
+#results-content .report-header h2 {
+     color: var(--color-primary-olive);
+     margin-top: 0;
+     margin-bottom: var(--spacing-unit);
+     font-size: 1.8em; /* Ajuste de tamaño */
+     border-bottom: none; /* Quita el borde del h2 principal */
+     padding-bottom: 0;
+     text-align: left; /* Alinear a la izquierda */
+}
+
+#results-content .report-header p {
+    text-align: left; /* Alinear a la izquierda */
+    font-size: 0.95em; /* Tamaño legible para la fecha */
+    color: var(--color-medium-gray);
+    margin-top: 0;
+    margin-bottom: var(--spacing-large);
+}
+
+#results-content hr {
+    border: none;
+    border-top: 2px dashed var(--color-light-gray); /* Línea punteada para separación */
+    margin: var(--spacing-large) 0; /* Más espacio */
+}
+
+#results-content h3 {
+    font-family: 'Oswald', sans-serif;
+    color: var(--color-secondary-olive);
+    margin-top: var(--spacing-large);
+    margin-bottom: var(--spacing-medium);
+    border-bottom: 1px solid var(--color-light-gray); /* Borde más sutil */
+    padding-bottom: var(--spacing-small);
+    font-size: 1.4em;
+}
+
+/* Estilos para el resumen de cada ítem */
+.item-summary {
+    margin-bottom: var(--spacing-large);
+    padding: var(--spacing-medium);
+    border: 1px solid var(--color-light-gray);
+    border-radius: var(--border-radius-small);
+    background-color: var(--color-extra-light-gray); /* Fondo muy ligero */
+    box-shadow: var(--shadow-subtle); /* Sombra suave */
+}
+
+.item-summary h4 {
+    font-family: 'Lato', sans-serif;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: var(--spacing-small);
+    color: var(--color-primary-olive); /* Verde olivo principal */
+    font-size: 1.1em;
+    border-bottom: 1px dotted var(--color-light-gray); /* Borde punteado */
+    padding-bottom: var(--spacing-unit);
+}
+
+.item-summary p {
+    margin: var(--spacing-unit) 0; /* Más espacio vertical entre párrafos */
+    font-size: 0.95em;
+    color: var(--color-dark-gray);
+    display: flex; /* Usar flexbox para alinear etiqueta y valor */
+    justify-content: space-between; /* Espacio entre ellos */
+    flex-wrap: wrap; /* Permitir que se envuelvan si es necesario */
+}
+
+.item-summary p strong {
+    display: inline-block;
+    min-width: 180px; /* Ancho mínimo para la etiqueta */
+    margin-right: var(--spacing-medium); /* Espacio entre etiqueta y valor */
+    color: var(--color-medium-gray); /* Color para las etiquetas */
+    flex-shrink: 0; /* Evita que la etiqueta se encoja */
+}
+
+.item-summary p span {
+    flex-grow: 1; /* Permite que el valor ocupe el espacio restante */
+    text-align: right; /* Alinea el valor a la derecha */
+    font-weight: normal; /* Asegura que el valor no esté en negrita */
+}
+
+/* Estilos para la Tabla de Materiales Totales */
+#results-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: var(--spacing-medium); /* Ajuste de margen */
+    margin-bottom: var(--spacing-large);
+    box-shadow: var(--shadow-medium); /* Sombra para la tabla */
+    border-radius: var(--border-radius-medium); /* Aplica al contenedor table */
+    overflow: hidden; /* Asegura que los bordes redondeados se vean bien con el borde deladentro */
+    background-color: var(--color-white); /* Fondo para la tabla */
+}
+
+#results-content th,
+#results-content td {
+    border: 1px solid var(--color-light-gray); /* Bordes de celda sutiles */
+    padding: var(--spacing-medium); /* Más padding */
+    text-align: left;
+    font-size: 0.95em;
+}
+
+#results-content th {
+    background-color: var(--color-light-gray); /* Fondo para encabezados */
+    font-weight: bold;
+    text-align: center;
+    color: var(--color-dark-gray);
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#results-content tbody tr:nth-child(even) {
+    background-color: var(--color-extra-light-gray); /* Raya para filas pares */
+}
+
+#results-content tbody tr:hover { /* Efecto hover en filas */
+    background-color: #eef; /* Fondo azul muy claro */
+}
+
+#results-content td:last-child { /* Columna de cantidad */
+    text-align: right;
+    font-weight: bold;
+    color: var(--color-primary-olive); /* Verde olivo principal para cantidades */
+}
+
+#results-content .error-message {
+    color: var(--color-error); /* Rojo de error */
+    font-weight: bold;
+    text-align: center;
+    margin-top: var(--spacing-large);
+    padding-top: var(--spacing-medium);
+    border-top: 2px dashed var(--color-error);
+}
+
+/* Estilos para la primera carga */
+#results-content p:first-child:last-child {
+    text-align: center;
+    color: var(--color-medium-gray);
+    font-style: italic;
+}
+
+/* Footer styles */
+footer {
+    text-align: center;
+    margin-top: var(--spacing-extra-large);
+    padding-top: var(--spacing-large);
+    border-top: 1px solid var(--color-light-gray);
+    font-size: 0.85em;
+    color: var(--color-medium-gray);
+}
+
+footer p {
+    margin: var(--spacing-unit) 0; /* Espacio entre párrafos del footer */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: var(--spacing-large) var(--spacing-medium);
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 1.5em;
+    }
+
+    .input-group {
+        flex-direction: column; /* Stack label and input */
+        align-items: flex-start;
+        gap: var(--spacing-unit);
+    }
+
+    .input-group label {
+        width: auto; /* Remove fixed width */
+        margin-right: 0;
+    }
+
+    .input-group input[type="number"],
+    .input-group select {
+         width: 100%; /* Full width inputs */
+         min-width: 0;
+    }
+
+     /* Responsive for panel type containers */
+    .muro-panel-types:not(.hidden),
+    .cielo-panel-type:not(.hidden) {
+        padding: var(--spacing-medium); /* Keep padding */
+        margin-bottom: var(--spacing-medium); /* Keep margin */
+        border: 1px solid var(--color-light-gray); /* Keep border */
+        border-radius: var(--border-radius-medium); /* Keep radius */
+        margin-top: var(--spacing-large); /* Keep top margin */
+        padding-top: var(--spacing-medium); /* Adjust padding top */
+    }
+
+
+    .remove-item-btn {
+        top: var(--spacing-small);
+        right: var(--spacing-small);
+        padding: 3px 6px;
+        font-size: 0.7rem;
+    }
+
+    .download-options {
+        flex-direction: column; /* Stack download buttons */
+        gap: var(--spacing-unit);
+    }
+
+    .download-options button {
+         width: 100%; /* Full width download buttons */
+         flex-grow: 0;
+    }
+
+    .item-summary p {
+        flex-direction: column; /* Stack summary label and value */
+        align-items: flex-start;
+        gap: var(--spacing-unit);
+    }
+
+    .item-summary p strong {
+        min-width: auto; /* Remove min width */
+        margin-right: 0;
+    }
+
+    .item-summary p span {
+        text-align: left; /* Align value to the left */
+    }
+
+    footer {
+        padding-top: var(--spacing-medium);
+        margin-top: var(--spacing-large);
+    }
+     .clarification-text {
+        font-size: 0.8em; /* Smaller font on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8em;
+    }
+
+    h2 {
+        font-size: 1.3em;
+    }
+
+    .container {
+        padding: var(--spacing-medium) var(--spacing-unit);
+    }
+
+    button {
+        font-size: 1rem;
+        padding: var(--spacing-small);
+    }
+
+    .download-options button {
+        font-size: 0.9rem;
+        padding: var(--spacing-unit);
+    }
+
+    #results-content th,
+    #results-content td {
+        padding: var(--spacing-unit);
+        font-size: 0.9em;
+    }
+
+    footer {
+        font-size: 0.8em;
+    }
+     .clarification-text {
+        font-size: 0.8em; /* Consistent smaller font */
+    }
+}
